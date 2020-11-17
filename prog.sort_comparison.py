@@ -67,7 +67,7 @@ def sort_comparison(N, k):
     return m_sort_average_time, p_sort_average_time
 
 
-for i in range(0, 15):
+for i in range(0, 7):
     m_sort, p_sort = sort_comparison(10 ** i, 5)
     if m_sort < p_sort:
         print('m_sort is {:0.15f} sec. faster than p_sort on {:d} array elements' \

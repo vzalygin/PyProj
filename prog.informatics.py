@@ -1,22 +1,16 @@
-import sys
-import math
-
-
-def func(a, div):
-    s_a = math.sqrt(a)
-    if a % div == 0:
-        return False
-    if s_a > div+1:
-        return func(a, div+1)
-    return True
-
-
-sys.setrecursionlimit(1000000000)
-n = int(input())
-if n != 2:
-    if func(n, 2):
-        print('YES')
+def to_sys(a, n):
+    if a % n < 10:
+        s = str(a % n)
     else:
-        print('NO')
+        s = chr(a % n - 10 + ord('A'))
+    if a // n != 0:
+        s = str(to_sys(a//n, n)) + s
+    return s
+
+
+x, sys = [int(x) for x in input().split()]
+if x < 0:
+    y = '-' + to_sys(-x, sys)
 else:
-    print('YES')
+    y = to_sys(x, sys)
+print(y)
