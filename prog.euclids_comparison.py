@@ -14,38 +14,40 @@ def complete_euclids_algorithm(a, b):
     if b > a:
         a, b = b, a
     while a % b > 0:
-        k = -(a//b)
-        if (a + k*b) < -(a + (k-1)*b):
-            a, b = b, a + k*b
+        k = a // b
+        n1 = (a - k * b)
+        n2 = -(a - (k - 1) * b)
+        if n1 < n2:
+            a, b = b, n1
         else:
-            a, b = b, -(a + (k-1)*b)
+            a, b = b, n2
     return b
 
 
 def measure(func, nums):
     w_time = 0
+    s_time = time.time()
     for n in nums:
-        s_time = time.time()
         func(n[0], n[0])
-        e_time = time.time()
-        w_time += e_time - s_time
-    w_time /= len(nums)
+    e_time = time.time()
+    w_time += e_time - s_time
     return w_time
 
 
 funcs = [naive_euclids_algorithm, complete_euclids_algorithm]
-nums = [[random.randrange(100000000000000, 10000000000000000), random.randrange(100000000000000, 10000000000000000)] for _ in range(1000)]
-for n in nums:
-    times = []
-    for func in funcs:
-        s_time = time.mktime(time.strptime(time.asctime()))
-        func(n[0], n[0])
-        e_time = time.mktime(time.strptime(time.asctime()))
-        times.append(e_time - s_time)
-    print('Числа: {:d} {:d}'.format(n[0], n[1]))
-    print('Наивный алгоритм Евклида: {:0.15f}'.format(times[0]))
-    print('Стандартный алгоритм Евклида: {:0.15f}'.format(times[1]))
-    if times[0] > times[1]:
-        print('Наивный алгоритм Евклида быстрее')
-    elif times[1] > times[0]:
-        print('Стандартный алгоритм Евклида быстрее')
+
+print('Генерация списка чисел')
+nums = [[random.randrange(100000000000000, 10000000000000000), random.randrange(100000000000000, 10000000000000000)] \
+        for _ in range(1000000)]
+
+print('Измерение времени работы')
+times = []
+for func in funcs:
+    times.append(measure(func, nums))
+
+print('Наивный алгоритм Евклида: {:0.15f}'.format(times[0]))
+print('Стандартный алгоритм Евклида: {:0.15f}'.format(times[1]))
+if times[0] < times[1]:
+    print('Наивный алгоритм Евклида быстрее')
+elif times[1] < times[0]:
+    print('Стандартный алгоритм Евклида быстрее')
