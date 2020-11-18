@@ -1,9 +1,14 @@
+el = [0]
+
+
 def phib(n):
-    if n == 0:
-        return 1
-    if n < 0:
-        return 0
-    return phib(n-1)+phib(n-2)
+    if len(el) < n:
+        phib(n-1)
+    elif n == 1:
+        el.append(1)
+        return
+    el.append(el[n-1] + el[n-2])
 
 
-print(phib(int(input())-1))
+phib(int(input()))
+print(el[-1])
