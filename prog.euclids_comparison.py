@@ -34,7 +34,7 @@ def measure(func, nums):
 
 
 funcs = [naive_euclids_algorithm, complete_euclids_algorithm]
-nums = [[random.randrange(1, 1000000000000), random.randrange(1, 1000000000000)] for _ in range(1000)]
+nums = [[random.randrange(100000000000000, 10000000000000000), random.randrange(100000000000000, 10000000000000000)] for _ in range(1000)]
 for n in nums:
     times = []
     for func in funcs:
