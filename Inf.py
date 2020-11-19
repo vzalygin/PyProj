@@ -1,14 +1,10 @@
-el = [0]
+def rapid_exponentiation(x, n):
+    if n % 2 == 0:
+        x **= 2
+        x **= n/2
+    else:
+        x *= x**(n-1)
+    return x
 
 
-def phib(n):
-    if len(el) < n:
-        phib(n-1)
-    elif n == 1:
-        el.append(1)
-        return
-    el.append(el[n-1] + el[n-2])
-
-
-phib(int(input()))
-print(el[-1])
+print(rapid_exponentiation(float(input()), float(input())))
