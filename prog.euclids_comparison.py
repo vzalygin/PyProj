@@ -3,35 +3,25 @@ import random
 
 
 def naive_euclids_algorithm(a, b):
-    if b > a:
-        a, b = b, a
-    while a % b > 0:
+    while b != 0:
         a, b = b, a % b
-    return b
+    return a
 
 
 def complete_euclids_algorithm(a, b):
-    if b > a:
-        a, b = b, a
-    while a % b > 0:
-        k = a // b
-        n1 = (a - k * b)
-        n2 = -(a - (k - 1) * b)
-        if n1 < n2:
-            a, b = b, n1
-        else:
-            a, b = b, n2
-    return b
+    while b != 0:
+        m = abs(b)
+        a, b = b, a%m
+        if b > m-b: b = b-m
+    return a
 
 
 def measure(func, nums):
-    w_time = 0
     s_time = time.time()
     for n in nums:
         func(n[0], n[0])
     e_time = time.time()
-    w_time += e_time - s_time
-    return w_time
+    return e_time - s_time
 
 
 funcs = [naive_euclids_algorithm, complete_euclids_algorithm]
