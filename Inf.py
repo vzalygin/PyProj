@@ -1,14 +1,11 @@
-el = [0]
+def move(n, x, y):
+    if n == 1:
+        print(n, 1, 3)
+    else:
+        dop = 6-3-1
+        move(n-1, 1, 2)
+        print(n-1, 1, 3)
+        move(n-1, 2, 3)
 
 
-def phib(n):
-    if len(el) < n:
-        phib(n-1)
-    elif n == 1:
-        el.append(1)
-        return
-    el.append(el[n-1] + el[n-2])
-
-
-phib(int(input()))
-print(el[-1])
+move(int(input()), 1, 3)
