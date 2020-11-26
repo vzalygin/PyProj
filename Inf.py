@@ -9,3 +9,4 @@ def move(n, x, y):
 
 
 move(int(input()), 1, 3)
+
