@@ -1,10 +1,12 @@
-def rapid_exponentiation(x, n):
-    if n % 2 == 0:
-        x **= 2
-        x **= n/2
-    else:
-        x *= x**(n-1)
-    return x
+def move(n, x, y):
+    if n > 0:
+        if x+y == 4:
+            move(n, x, 2)
+            move(n, 2, y)
+        else:
+            move(n-1, x, y)
+            print(n, x, y)
+            move(n-1, 6-x-y, y)
 
 
-print(rapid_exponentiation(float(input()), float(input())))
+move(int(input()), 1, 3)
