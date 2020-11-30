@@ -1,12 +1,10 @@
 def move(n, x, y):
-    if n > 0:
-        if x+y == 4:
-            move(n, x, 2)
-            move(n, 2, y)
-        else:
-            move(n-1, x, y)
-            print(n, x, y)
-            move(n-1, 6-x-y, y)
-
+    if n == 1:
+        print(n, 1, 3)
+    else:
+        dop = 6-3-1
+        move(n-1, 1, 2)
+        print(n-1, 1, 3)
+        move(n-1, 2, 3)
 
 move(int(input()), 1, 3)

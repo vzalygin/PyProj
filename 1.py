@@ -30,11 +30,12 @@ def encryption(container, mess, shift=-1):
      В случае, если сообщение невозможно полностью вставить в текст, возвращается строка, сигнализирующая об этом"""
     enc_mess = ''
     int_mess = ''
+    if shift == -1:
+        shift = len(container) // len(mess)
+    mess = caesar_cipher(mess, shift)
     for x in mess:
         int_mess += sys10to7(x)
     mess = int_mess
-    if shift == -1:
-        shift = len(container) // len(mess)
     curr_syms = ''
     for sym in container:
         if len(mess) > 0:
@@ -63,7 +64,11 @@ def decryption(enc_mess):
             mess_int += str(el.index(sym))
     for i in range(0, len(mess_int), 2):
         mess += chr(sys7to10(mess_int[i:i + 2]) + ord('а') - 1)
+    mess = caesar_cipher(mess, shift)
     return mess
+
+
+
 
 
 def main():
