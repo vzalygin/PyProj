@@ -26,8 +26,7 @@ def finding_solution_second_var(b, m, c):
 
 # 6x - 10y = 4
 def main():
-    # a, b, c = int(input()), int(input()), int(input())
-    a, b, c = 6, -10, 4
+    a, b, c = int(input()), int(input()), int(input())
     e = abs(euclidean(a, b))
     if c % e == 0:
         print(str(a) + 'x + ' + str(b) + 'y = ' + str(c))

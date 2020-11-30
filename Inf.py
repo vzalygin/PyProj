@@ -7,6 +7,4 @@ def move(n, x, y):
         print(n-1, 1, 3)
         move(n-1, 2, 3)
 
-
 move(int(input()), 1, 3)
-
