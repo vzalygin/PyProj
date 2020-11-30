@@ -1,4 +1,5 @@
 import random
+import sys
 
 
 def permutations(elements):
@@ -25,39 +26,39 @@ def psort(numbers):
     return psort(left) + mid + psort(right)
 
 
+def p(array, a, b):
+    array[a], array[b] = array[b], array[a]
+
+
 def psort_inplace(array, left=0, right=None):
     """Упорядочивает кусок array[left:right]"""
     if right is None: right = len(array)
     if right - left < 2: return
-    pivot_index = partition_inplace(array, left, right)
-    psort_inplace(array, left, pivot_index)
-    psort_inplace(array, pivot_index + 1, right)
+    pivot_index_s, pivot_index_e = partition_inplace(array, left, right)
+    psort_inplace(array, left, pivot_index_s)
+    psort_inplace(array, pivot_index_e, right)
 
 
 def partition_inplace(array, left, right):
-    # pivot = array[random.randrange(left, right)]
-    pivot_ind = left
+    pivot_ind = random.randrange(left, right)
     pivot = array[pivot_ind]
-    # проход по массиву и анализ
-    less = 0
-    equal = 0
-    great = 0
-    for i in range(left, right):
-        if array[i] > pivot:
-            great += 1
-        elif array[i] < pivot:
-            less += 1
-        else:
-            equal += 1
-    array[pivot_ind], array[less] = array[less], array[pivot_ind]
-    pivot_ind = less
-    for i in range(left, right):
-        pass
-    print(less, equal, great)
-    return array.index(array[pivot_ind])
+    p(array, left, pivot_ind)
+    pivot_ind = left
+
+    for i in range(left + 1, right):  # перекидываем все элементы меньще опорного на левую сторону
+        if array[i] < pivot:
+            p(array, pivot_ind, i)
+            pivot_ind += 1
+            p(array, pivot_ind, i)
+
+    pivot_ind_e = pivot_ind + 1  # ставим элементы равные опорному рядом с ним
+    for i in range(pivot_ind+1, right):
+        if array[i] == pivot:
+            p(array, pivot_ind_e, i)
+            pivot_ind_e += 1
+    return pivot_ind, pivot_ind_e
 
 
-foo = [5, 3, 6, 2, 8, 9, 1, 4, 7, 5, 6, 5]
-partition_inplace(foo, 0, len(foo))
-print(foo)
-# psort_inplace(foo)
+foo = [6, 9, 4, 2, 1, 7, 5, 3, 2, 8, 0, 0]
+psort_inplace(foo)
+print(*foo)
