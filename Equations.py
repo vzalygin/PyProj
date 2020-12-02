@@ -6,7 +6,7 @@ def euclidean(a, b):
 
 def main():
     a, b, c = [int(x) for x in ((((input().replace(' ', '')).replace('x', ' ')).replace('y', ' ')).replace('+', ' ')).replace('=', ' ').split()]
-    print(a, b, c)
+    print(a, b, c, '')
     print(euclidean(a, b))
     if c % euclidean(a, b) != 0:
         print('No solution')
