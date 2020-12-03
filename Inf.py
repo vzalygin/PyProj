@@ -1,10 +1,10 @@
-def move(n, x, y):
+def func(n, x, y):
     if n == 1:
-        print(n, 1, 3)
+        print(n, x, y)
     else:
-        dop = 6-3-1
-        move(n-1, 1, 2)
-        print(n-1, 1, 3)
-        move(n-1, 2, 3)
+        func(n-1, x, 6-x-y)
+        print(n, x, y)
+        func(n-1, 6-x-y, y)
 
-move(int(input()), 1, 3)
+
+func(int(input()), 1, 3)
