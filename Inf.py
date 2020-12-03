@@ -1,10 +1,33 @@
+max_n = 0
+
+
 def func(n, x, y):
     if n == 1:
-        print(n, x, y)
+        if abs(y - x) == 1:
+            print(n, x, y)
+        else:
+            print(n, x, 6 - x - y)
+            print(n, 6 - x - y, y)
     else:
-        func(n-1, x, 6-x-y)
-        print(n, x, y)
-        func(n-1, 6-x-y, y)
+        func(n - 1, x, 6 - x - y)
+        if abs(x-y) == 1:
+            print(n, x, y)
+            func(n - 1, 6 - x - y, y)
+        else:
+            # передвигаем все остальные кольца на правую фигню (были по середине)
+            # передвигаем то самое кольцо на середину
+            # двигаем все остальные на левую фигню
+            # передвигаем то самое кольцо на правую фигню
+            # передвигаем всё остальное обратно на середину
+            # x - где то самое кольцо
+            # y - куда его сунуть
+            # 6-x-y - где другие кольца
+            func(n-1, 6-x-y, y)
+            print(n, x, 6-x-y)
+            func(n-1, y, x)
+            print(n, 6-x-y, y)
+            func(n-1, x, y)
 
 
-func(int(input()), 1, 3)
+max_n = int(input())
+func(max_n, 1, 3)
