@@ -29,8 +29,7 @@ def ll_b_sort(lst):
 def ll_permutation(lst):
     if not is_empty(tail(lst)):
         if head(lst) > head(tail(lst)):
-            tmp = head(lst)
-            lst = join(head(tail(lst)), join(tmp, tail(tail(lst))))
+            lst = join(head(tail(lst)), join(head(lst), tail(tail(lst))))
             lst = join(head(lst), ll_permutation(tail(lst)))
     return lst
 
