@@ -5,27 +5,20 @@ def euclidean(a, b):
 
 
 def func(a, m, c):
-    # print(str(a) + 'j =' + str(m) + '= ' + str(c))
     a %= m
     c %= m
     b = a
     a = m
     c0 = 0
-    # print('==================')
-    # print(str(a) + 'y =' + str(m) + '= ' + str(c0))
-    # print(str(b) + 'y =' + str(m) + '= ' + str(c))
     while b != 0:
         k = -(a // b)  # на сколько надо умножить b
         a, b = b, a % b
         c0, c = c, c0 + c * k
-        # print(str(b) + 'y =' + str(m) + '= ' + str(c))
     if c0 % m < abs(c0): c0 = c0 % m
     return m, c0
 
 
 def main():
-    # a, b, c = [int(x) for x in ((((input().replace(' ', '')).replace('x', ' ')).replace('y', ' ')).replace('+', ' ')).replace('=', ' ').split()]
-    # print(a, b, c)
     a, b, c = [int(i) for i in input().split()]
     e = euclidean(a, b)
     if a == 0 and b == 0:
@@ -38,7 +31,7 @@ def main():
     elif a == 0:
         if c % b == 0:
             c //= b
-            print('y = ' + str(c) + 'k')
+            print('y = ' + str(c))
             print('x = 1j')
         else:
             print('No solution')
@@ -47,7 +40,7 @@ def main():
         if c % a == 0:
             c //= a
             print('y = 1j')
-            print('x = ' + str(c) + 'k')
+            print('x = ' + str(c))
         else:
             print('No solution')
         exit()
@@ -61,10 +54,8 @@ def main():
     c //= e
     m, c0 = func(b, a, c)
     print('y = ' + str(m) + 'k + ' + str(c0))
-    # print(str(a) + 'x + ' + str(b) + '*(' + str(m) + 'f + (' + str(c0) + ')) = ' + str(c))
     m *= b
     c0 *= b
-    # print(str(a) + 'x + ' + str(m) + 'f + ' + str(c0) + ' = ' + str(c))
     c -= c0
     c //= a
     m = -m
