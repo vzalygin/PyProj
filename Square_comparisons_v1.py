@@ -6,7 +6,7 @@ def solvability(a, p):
 
 
 def is_simple(p):
-    return ((p - 3) / 4).is_integer()
+    return (p - 3) % 4 == 0
 
 
 def simple_solution(a, p):
@@ -69,7 +69,7 @@ def main(p, a):
         if t % p == 1:
             print(f'x_{counter} является ответом. x_{counter} =', ((x % p), -(x % p)))
             exit()
-        print(f'x_{counter}({x}) не является ответом')
+        print(f'x_{counter}({x}) не является ответом.')
         counter += 1
         k = k_search(t, p)
         b = b_search(p, k)
