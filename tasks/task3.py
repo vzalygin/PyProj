@@ -3,7 +3,7 @@ def perim(a, b, c):
 
 
 def canBe(a, b, c):
-    return a + b > c and a + c > b and c + b > a and a * b * c > 0 \
+    return a + b > c and a + c > b and c + b > a \
            and a > 0 and b > 0 and c > 0
 
 
