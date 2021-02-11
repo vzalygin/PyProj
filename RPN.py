@@ -52,10 +52,11 @@ def reverse(stack):
 
 
 def main():
+    dictionary = {}
     queue = [try_parse_int(x) for x in sys.stdin.read().split()]
+
     stack_of_commands = []
     stack_of_operands = []
-    dictionary = {}
     while not is_empty(queue):
         stack_of_commands.append(queue.pop())
 
@@ -91,9 +92,8 @@ def main():
             stack_of_operands.append(a)
         elif item == '!':
             item = stack_of_operands.pop()
-            reverse(item)
-            for n in item:
-                stack_of_commands.append(n)
+            for n in range(len(item)-1, -1, -1):
+                stack_of_commands.append(item[n])
         elif item == '?':
             case_false = stack_of_operands.pop()
             case_true = stack_of_operands.pop()
@@ -105,13 +105,14 @@ def main():
             else:
                 stack_of_operands.append(case_false)
             stack_of_commands.append('!')
-        elif item[0] == ':' and len(item) > 1:
-            dictionary[item[1:]] = stack_of_operands.pop()
+        elif item[0] == ':':
+            if len(item) > 1:
+                dictionary[item[1:]] = stack_of_operands.pop()
         elif item in dictionary:
             stack_of_operands.append(dictionary[item])
             stack_of_commands.append('!')
         elif item not in dictionary:
-            print(f'ERROR {item}')
+            print('ERROR', item)
             return
 
 
