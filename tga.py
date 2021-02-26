@@ -1,21 +1,29 @@
+from math import sqrt
+
 def empty_image(width, height, color):
     return [[color] * width for _ in range(height)]
 
 
 def draw_line(begin_coord, end_coord, image, color):
-    if begin_coord[1] - end_coord[1] != 0:
-        k = (begin_coord[0] - end_coord[0]) / (begin_coord[1] - end_coord[1])
-    else:
-        k = len(image)*100
-    b = begin_coord[0] - k * begin_coord[1]
+    a = end_coord[0] - begin_coord[0]
+    b = begin_coord[1] - end_coord[1]
+    c = -(a*begin_coord[0] + b*begin_coord[1])
+    print(a, b, c)
     curr_coord = begin_coord
-    while curr_coord[0] != end_coord[0] or curr_coord[1] != end_coord[1]:
+    tmp = 0
+    try:
+        while curr_coord[0] != end_coord[0]:
+            image[curr_coord[0]][curr_coord[1]] = color
+            print(curr_coord[0], curr_coord[1], '=', a * curr_coord[0],  b * curr_coord[1], c)
+            if sqrt():
+                curr_coord[0] += 1
+            else:
+                curr_coord[1] += 1
+            tmp += 1
+
         image[curr_coord[0]][curr_coord[1]] = color
-        if curr_coord[0] <= k*curr_coord[1] + b:
-            curr_coord[0] += 1
-        else:
-            curr_coord[1] += 1
-    image[curr_coord[0]][curr_coord[1]] = color
+    except:
+        print('err')
     return image
 
 
@@ -41,6 +49,6 @@ def create_image_file(filename, image):
 white = [255, 255, 255]
 black = [0, 0, 0]
 
-img = empty_image(100, 100, white)
-img = draw_line([0, 0], [49, 0], img, black)
+img = empty_image(10, 10, white)
+img = draw_line([0, 0], [4, 4], img, black)
 create_image_file("line.tga", img)
