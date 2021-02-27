@@ -46,11 +46,6 @@ def is_empty(stack):
         return True
 
 
-def reverse(stack):
-    for i in range(len(stack) - 1, -1, -1):
-        stack.append(stack.pop(i))
-
-
 def main():
     dictionary = {}
     queue = [try_parse_int(x) for x in sys.stdin.read().split()]
