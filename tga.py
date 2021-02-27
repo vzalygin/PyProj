@@ -18,7 +18,7 @@ def draw_line(b_c, e_c, image, color):
     e_c - конечные
     c_c - текущие координаты
     """
-    c_c = b_c.copy()
+    c_c = b_c[:]
     a = e_c[0] - c_c[0]
     b = c_c[1] - e_c[1]
     c = -(a * e_c[0] + b * e_c[1])
@@ -68,7 +68,7 @@ def create_image_file(filename, image):
 
 
 white = [255, 255, 255]
-black = [0, 255, 0]
+black = [0, 0, 0]
 red = [0, 0, 255]
 
 size = [9, 9]
