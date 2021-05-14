@@ -67,6 +67,12 @@ def create_image_file(filename, image):
                           1 << 5, ] + matrix))
 
 
+a = -127
+a = a + 1128
+a = str(a)
+#a = a[1:]
+print(a)
+
 white = [255, 255, 255]
 black = [0, 0, 0]
 red = [0, 0, 255]
