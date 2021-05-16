@@ -19,88 +19,102 @@ class Dict:
     def __delitem__(self, key):
         self.root = self.delete(self.root, key)
 
-    def __repr__(self):
-        return str(self.root)
-
     def __len__(self):
         if not self.is_empty(self.root):
-            return self.root[4]
+            return len(self.root)
         else:
             return 0
+
+    def __repr__(self):
+        return str(self.root)
 
     def is_empty(self, tree):
         return tree is None
 
-    def get_sum(self, tree):
-        res = 0
-        if tree[1] is not None:
-            res += tree[1][4]
-        if tree[2] is not None:
-            res += tree[1][4]
-        res += 1
-        print(tree, res)
-        return res
-
-    def get_height(self, tree):
-        res = 0
-        if tree[1] is not None:
-            if res < tree[1][3]:
-                res = tree[1][3]
-        if tree[2] is not None:
-            if res < tree[2][3]:
-                res = tree[2][3]
-        res += 1
-        return res
-
     def set(self, tree, key, value):
         if self.is_empty(tree):
-            return ((key, value), None, None, 1, 1)
-        elif tree[0][0] == key:
-            return ((key, value), tree[1], tree[2], tree[3], tree[4])
-        elif key < tree[0][0]:
-            tree_tmp = (tree[0], self.set(tree[1], key, value), tree[2], 0, 0)
-            return (tree[0], tree_tmp[1], self.get_height(tree_tmp), self.get_sum(tree_tmp))
+            return Node(key, value)
+        elif tree.key== key:
+            return Node(key, value, node=tree)
+        elif key < tree.key:
+            new_tree = Node(left=self.set(tree.left, key, value), node=tree)
         else:
-            tree_tmp = (tree[0], tree[1], self.set(tree[2], key, value), 0, 0)
-            return (tree[0], tree[1], tree_tmp[2], self.get_height(tree_tmp), self.get_sum(tree_tmp))
+            new_tree = Node(right=self.set(tree.right, key, value), node=tree)
+
+        if abs(new_tree.right_height - new_tree.left_height) > 1:
+            return self.rotation(new_tree)
+        return new_tree
+
+    def rotation(self, tree):
+        if tree.right_height - tree.left_height > 0: # левое вращение
+            return Node(tree.right.key, tree.right.value, Node(tree.key, tree.value, tree.left, tree.right.left), tree.right.right)
+        else:
+            return Node(tree.left.key, tree.left.value, tree.left.left, Node(tree.key, tree.value, tree.left.right, tree.right))
 
     def get(self, tree, key):
         if self.is_empty(tree):
             raise KeyError()
-        elif key == tree[0][0]:
-            return tree[0][1]
-        elif key < tree[0][0]:
-            return self.get(tree[1], key)
+        elif key == tree.key:
+            return tree.value
+        elif key < tree.key:
+            return self.get(tree.left, key)
         else:
-            return self.get(tree[2], key)
+            return self.get(tree.right, key)
 
     def find_for_delete(self, tree):
-        if self.is_empty(tree[2]):
-            return tree[0], tree[1]
-        el, left_tree = self.find_for_delete(tree[2])
-        return el, (tree[0], tree[1], left_tree)
+        if self.is_empty(tree.right):
+            return tree.key, tree.value, tree.left
+        key, value, right_tree = self.find_for_delete(tree.right)
+        return key, value, Node(tree.key, tree.value, tree.left, right_tree)
 
     def delete(self, tree, key):
         if self.is_empty(tree): return None
-        if key == tree[0][0]:
-            if not self.is_empty(tree[1]):
-                el, left_tree = self.find_for_delete(tree[1])
-                return (el, left_tree, tree[2])
-            elif not self.is_empty(tree[2]):
-                return tree[2]
+        if key == tree.key:
+            if not self.is_empty(tree.left):
+                key2, value, left_tree = self.find_for_delete(tree.left)
+                return Node(key2, value, left_tree, tree.right)
+            elif not self.is_empty(tree.right):
+                return tree.right
             else:
                 return None
-        if key < tree[0][0]:
-            return (tree[0], self.delete(tree[1], key), tree[2], tree[3], tree[4])
+        if key < tree.key:
+            return Node(tree.key, tree.value, self.delete(tree.left, key), tree.right)
         else:
-            return (tree[0], tree[1], self.delete(tree[2], key), tree[3], tree[4])
+            return Node(tree.key, tree.value, tree.left, self.delete(tree.right, key))
 
-tree = Dict()
-tree[5] = 1
-tree[4] = 2
-tree[6] = 3
-tree[7] = 4
-print(tree)
+
+class Node:
+    def __init__(self, key=None, value=None, left=None, right=None, node=None):
+        #filling data
+        self.key = key
+        self.value = value
+        self.left = left
+        self.right = right
+        self.length = 1
+        if node is not None:
+            if self.key is None: self.key = node.key
+            if self.value is None: self.value = node.value
+            if self.left is None: self.left = node.left
+            if self.right is None: self.right = node.right
+
+        #length
+        if self.right is not None:
+            self.length += self.right.length
+        if self.left is not None:
+            self.length += self.left.length
+
+        #height
+        self.left_height = 0
+        self.right_height = 0
+        if self.left is not None: self.left_height = self.left.height + 1
+        if self.right is not None: self.right_height = self.right.height + 1
+        self.height = max(self.left_height, self.right_height)
+
+    def __repr__(self):
+        return '(l=' + str(self.length) + ' h=' + str(self.height) + ' ' + str(self.key) + '=' + str(self.value) + ', left=' + str(self.left) + ', right=' + str(self.right) + ')'
+
+    def __len__(self):
+        return self.length
 
 import sys
 exec(sys.stdin.read())
